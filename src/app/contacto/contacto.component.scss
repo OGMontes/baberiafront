@@ -1,0 +1,18 @@
+@use '../../_variables' as *;
+
+.contacto {
+  padding: 4rem 2rem;
+  color: $white;
+  max-width: 800px;
+  margin: 0 auto;
+
+  h1 {
+    margin-bottom: 1.5rem;
+    color: $red;
+  }
+
+  p {
+    line-height: 1.6;
+    color: $text-light;
+  }
+}
