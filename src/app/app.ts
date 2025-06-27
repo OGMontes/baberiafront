@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { NavbarComponent } from './navbar/navbar.component';
+import { FooterComponent } from './footer/footer.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.html',
-  styleUrl: './app.scss'
+  standalone: true,
+  imports: [RouterOutlet, NavbarComponent, FooterComponent],
+  templateUrl: './app.html' // 👈 usa el archivo externo
 })
-export class App {
-  protected title = 'barberia-app';
-}
+export class App {}

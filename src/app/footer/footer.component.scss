@@ -1,0 +1,36 @@
+@use '../../_variables' as *;
+
+.footer {
+  background: $gray-darker;
+  color: $gray-medium;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+
+    a {
+      color: $gray-light;
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: $red;
+      }
+    }
+  }
+
+  .footer-copy {
+    font-size: 0.85rem;
+    color: $gray-medium;
+  }
+}
