@@ -37,13 +37,24 @@ export class HomeComponent implements OnInit {
     return this.imageList[this.currentImageIndex];
   }
 
-  ngOnInit(): void {
-    setInterval(() => {
-      this.currentImageIndex = (this.currentImageIndex + 1) % this.imageList.length;
-    }, 4000);
+  imagenEnTransicion = false;
 
-    this.cargarServicios();
-  }
+ngOnInit(): void {
+  this.cargarServicios();
+  this.cambiarFondoConFade();
+}
+
+cambiarFondoConFade() {
+  setInterval(() => {
+    this.imagenEnTransicion = true;
+
+    setTimeout(() => {
+      this.currentImageIndex = (this.currentImageIndex + 1) % this.imageList.length;
+      this.imagenEnTransicion = false;
+    }, 1000); // coincide con CSS (1s)
+  }, 5000);
+}
+
 
   cargarServicios() {
     this.http.get<Servicio[]>('http://localhost:8000/servicios').subscribe(data => {

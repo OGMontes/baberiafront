@@ -1,4 +1,10 @@
-<section class="hero" [ngStyle]="{ 'background-image': 'url(' + currentImage + ')' }">
+<section class="hero">
+  <div
+    class="hero-background"
+    [style.backgroundImage]="'url(' + currentImage + ')'"
+    [class.fade]="imagenEnTransicion"
+  ></div>
+
   <div class="overlay"></div>
   <div class="hero-content">
     <h1>Transforma tu estilo.</h1>
@@ -6,6 +12,7 @@
     <a class="cta-button" routerLink="/cita">Haz tu cita</a>
   </div>
 </section>
+
 
 <section id="servicios" class="servicios-prev">
   <h2>Servicios disponibles</h2>

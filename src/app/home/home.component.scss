@@ -4,11 +4,21 @@
 .hero {
   position: relative;
   min-height: 80vh;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow: hidden;
+
+  .hero-background {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+    z-index: 0;
+  }
+
+  .hero-background.fade {
+    opacity: 0;
+  }
 
   .overlay {
     position: absolute;
