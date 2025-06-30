@@ -1,5 +1,18 @@
-<section class="contacto">
-  <h2>Contáctanos</h2>
-<p>Puedes contactarnos vía correo electrónico a <a href="mailto:contacto@barbersworkshop.mx">contacto&#64;barbersworkshop.mx</a></p>
-  <p>Visítanos en Calle Ficticia #123, CDMX</p>
+<section class="legal bg-white dark:bg-zinc-900 p-6 rounded-2xl shadow-2xl max-w-3xl mx-auto mt-10">
+  <h2 class="text-3xl font-bold text-zinc-800 dark:text-white mb-6 tracking-tight">Contacto</h2>
+
+  <p class="text-zinc-700 dark:text-zinc-300 mb-4">
+    Si tienes preguntas, sugerencias o deseas ponerte en contacto con nosotros, puedes usar la siguiente información o escribirnos directamente.
+  </p>
+
+  <div class="space-y-4 text-zinc-700 dark:text-zinc-300">
+    <p><strong>Nombre del negocio:</strong> THE BARBER'S WORKSHOP</p>
+    <p><strong>Correo electrónico:</strong> <a [attr.href]="'mailto:' + correo" class="enlace">{{ correo }}</a></p>
+    <p><strong>Teléfono:</strong> <a [attr.href]="'tel:' + telefono" class="enlace">{{ telefono }}</a></p>
+    <p><strong>Dirección:</strong> Av. Ejemplo 123, Col. Centro, Ciudad MX, México</p>
+  </div>
+
+  <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-6 italic text-center">
+    Horario de atención: Lunes a Sábado, 10:00 a 20:00 hrs
+  </p>
 </section>

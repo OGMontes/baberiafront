@@ -1,19 +1,22 @@
 <nav class="navbar">
   <div class="navbar-container">
-    <div class="navbar-logo" (click)="navigateToHomeAndScroll()">
-      THE BARBER'S WORKSHOP
+    <!-- Botón hamburguesa (mobile) -->
+    <div class="hamburger" (click)="toggleMenu()">
+      <div [class.open]="menuAbierto"></div>
     </div>
-    <ul class="navbar-links">
+
+    <div class="navbar-logo" (click)="navigateToHomeAndScroll()">THE BARBER'S WORKSHOP</div>
+
+    
+    <ul class="navbar-links" [class.abierto]="menuAbierto">
       <li>
-        <a (click)="navigateToHomeAndScroll()" 
-           [class.activo]="activeSection === 'top'">Inicio</a>
+        <a (click)="navigateToHomeAndScroll()" [class.activo]="activeSection === 'top'">Inicio</a>
       </li>
       <li>
-        <a (click)="navigateToHomeAndScroll('servicios')" 
-           [class.activo]="activeSection === 'servicios'">Servicios</a>
+        <a (click)="navigateToHomeAndScroll('servicios')" [class.activo]="activeSection === 'servicios'">Servicios</a>
       </li>
       <li>
-        <a routerLink="/cita" routerLinkActive="activo">Cita</a>
+        <a routerLink="/cita" routerLinkActive="activo" (click)="menuAbierto = false">Cita</a>
       </li>
     </ul>
   </div>

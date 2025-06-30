@@ -1,18 +1,68 @@
-@use '../../_variables' as *;
+.legal {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background: white;
+  color: #1a1a1a;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
 
-.aviso {
-  padding: 4rem 2rem;
-  color: $white;
-  max-width: 800px;
-  margin: 0 auto;
-
-  h1 {
+  h2 {
+    font-size: 1.875rem;
+    font-weight: 700;
     margin-bottom: 1.5rem;
-    color: $red;
   }
 
-  p {
-    line-height: 1.6;
-    color: $text-light;
+  .subtitulo {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    color: #333;
+  }
+
+  .parrafo {
+    font-size: 1rem;
+    color: #4a4a4a;
+    margin-bottom: 1rem;
+    line-height: 1.7;
+  }
+
+  .lista {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    color: #4a4a4a;
+    margin-bottom: 1.5rem;
+    li {
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .enlace {
+    color: #2563eb;
+    text-decoration: underline;
+    transition: color 0.3s;
+    &:hover {
+      color: #1d4ed8;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    background: #18181b;
+    color: #e4e4e7;
+
+    .subtitulo {
+      color: #f4f4f5;
+    }
+
+    .parrafo, .lista {
+      color: #d4d4d8;
+    }
+
+    .enlace {
+      color: #60a5fa;
+      &:hover {
+        color: #3b82f6;
+      }
+    }
   }
 }

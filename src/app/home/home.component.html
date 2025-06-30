@@ -3,32 +3,35 @@
   <div class="hero-content">
     <h1>Transforma tu estilo.</h1>
     <p>La experiencia de barbería más exclusiva, ahora a un clic.</p>
-<a class="cta-button" routerLink="/cita">Haz tu cita</a>
+    <a class="cta-button" routerLink="/cita">Haz tu cita</a>
   </div>
 </section>
 
 <section id="servicios" class="servicios-prev">
-  <h2>Servicios destacados</h2>
-  <div class="cards-container">
-    <div class="card">
-      <h3>Corte Clásico</h3>
-      <p>$150 MXN</p>
+  <h2>Servicios disponibles</h2>
+
+  <!-- CONTENEDOR FLEX PARA LOS SERVICIOS -->
+  <div class="servicios-list">
+    <div *ngFor="let servicio of servicios" class="card" (click)="toggleServicio(servicio.ServicioId)">
+      <h3>{{ servicio.Nombre }}</h3>
+      <p>${{ servicio.Precio }} MXN</p>
     </div>
-    <div class="card">
-      <h3>Barba Premium</h3>
-      <p>$130 MXN</p>
-    </div>
-    <div class="card">
-      <h3>Corte + Barba</h3>
-      <p>$250 MXN</p>
-    </div>
-    <div class="card">
-      <h3>Fade + Styling</h3>
-      <p>$180 MXN</p>
-    </div>
-    <div class="card">
-      <h3>Color o Diseño</h3>
-      <p>$220 MXN</p>
+  </div>
+
+  <!-- DETALLE EXPANDIBLE CON BARBEROS -->
+  <div *ngFor="let servicio of servicios">
+<div *ngIf="servicioActivo === servicio.ServicioId" class="expanded-servicio" [id]="'servicio-' + servicio.ServicioId">
+      <p class="descripcion">{{ servicio.Descripcion }}</p>
+
+      <div class="barberos-grid">
+        <div *ngFor="let barbero of barberosPorServicio[servicio.ServicioId]" class="barbero-card">
+<img [src]="'assets/barberos/' + ((barbero.FotoUrl && barbero.FotoUrl.trim()) || 'default.jpg')" />
+          <div>
+            <p class="nombre">{{ barbero.Nombre }}</p>
+            <p class="especialidad">{{ barbero.Especialidad }}</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>

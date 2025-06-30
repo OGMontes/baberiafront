@@ -1,49 +1,68 @@
 <section class="cita-form">
   <h2>Agenda tu cita</h2>
 
-  <form>
+  <form #form="ngForm" (ngSubmit)="validarYEnviar(form)">
     <div class="form-group">
       <label for="nombre">Nombre completo</label>
-      <input type="text" id="nombre" placeholder="Tu nombre" required />
+      <input type="text" id="nombre" name="nombre" [(ngModel)]="cita.nombre_cliente" required />
     </div>
 
     <div class="form-group">
       <label for="telefono">Teléfono</label>
-      <input type="tel" id="telefono" placeholder="55 1234 5678" required />
+      <input
+        type="tel"
+        id="telefono"
+        name="telefono"
+        [(ngModel)]="cita.telefono"
+        (keypress)="soloNumeros($event)"
+        required
+        pattern="[0-9]*"
+        inputmode="numeric"
+        maxlength="10"
+        placeholder="Ej. 5551234567"
+      />
     </div>
 
     <div class="form-group">
       <label for="servicio">Servicio</label>
-      <select id="servicio" name="servicio" required>
+      <select
+        id="servicio"
+        name="servicio"
+        [(ngModel)]="cita.servicio_id"
+        (change)="onServicioSeleccionado()"
+        required>
         <option value="" disabled selected>Selecciona un servicio</option>
-        <option value="Corte Clásico">Corte Clásico – $150 MXN</option>
-        <option value="Barba Premium">Barba Premium – $130 MXN</option>
-        <option value="Corte + Barba">Corte + Barba – $250 MXN</option>
-        <option value="Fade + Styling">Fade + Styling – $180 MXN</option>
-        <option value="Color o Diseño">Color o Diseño – $220 MXN</option>
+        <option *ngFor="let s of servicios" [value]="s.ServicioId">
+          {{ s.Nombre }} – ${{ s.Precio }} MXN
+        </option>
       </select>
     </div>
 
     <div class="form-group">
-  <label for="barbero">Barbero</label>
-  <select id="barbero" name="barbero" required>
-    <option value="" disabled selected>Selecciona un barbero</option>
-    <option value="Diego">Diego – Especialista en fades</option>
-    <option value="Luis">Luis – Cortes clásicos y barba</option>
-    <option value="Carlos">Carlos – Diseño y color</option>
-    <option value="Ana">Ana – Estilo moderno y detalles</option>
-  </select>
-</div>
-
+      <label for="barbero">Barbero</label>
+      <select id="barbero" name="barbero" [(ngModel)]="cita.barbero_id" required>
+        <option value="" disabled selected>Selecciona un barbero</option>
+        <option *ngFor="let b of barberos" [value]="b.BarberoId">
+          {{ b.Nombre }} – {{ b.Especialidad || 'General' }}
+        </option>
+      </select>
+    </div>
 
     <div class="form-group">
       <label for="fecha">Fecha y hora</label>
-      <input type="datetime-local" id="fecha" required />
+      <input type="datetime-local" id="fecha" name="fecha_cita" [(ngModel)]="cita.fecha_cita" required />
     </div>
 
     <div class="form-group">
       <label for="comentarios">Comentarios</label>
-      <textarea id="comentarios" rows="3" placeholder="¿Algo que debamos saber?"></textarea>
+      <textarea
+        id="comentarios"
+        name="comentarios"
+        [(ngModel)]="cita.comentarios"
+        rows="3"
+        maxlength="200"
+        placeholder="¿Algo que debamos saber? (máx. 200 caracteres)"
+      ></textarea>
     </div>
 
     <button type="submit" class="btn-submit">Reservar cita</button>
