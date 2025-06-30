@@ -11,4 +11,10 @@ export const routes: Routes = [
   { path: 'aviso', component: AvisoComponent },
   { path: 'terminos', component: TerminosComponent },
   { path: 'contacto', component: ContactoComponent },
+// 🚀 NUEVO: Ruta al panel admin
+  {
+    path: 'admin',
+    loadComponent: () =>
+      import('./admin/admin.component').then(m => m.AdminComponent)
+  }
 ];

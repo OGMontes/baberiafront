@@ -1,0 +1,22 @@
+<div class="admin-container">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <h1 class="admin-title">ADMIN</h1>
+    <ul class="menu">
+      <li (click)="seccion = 'barberos'" [class.activo]="seccion === 'barberos'">💈 Barberos</li>
+      <li (click)="seccion = 'servicios'" [class.activo]="seccion === 'servicios'">✂️ Servicios</li>
+      <li (click)="seccion = 'citas'" [class.activo]="seccion === 'citas'">📅 Citas</li>
+      <li (click)="seccion = 'notificaciones'" [class.activo]="seccion === 'notificaciones'">🔔 Notificaciones</li>
+    </ul>
+  </aside>
+
+  <!-- Contenido -->
+  <section class="contenido">
+    <div class="card">
+      <app-barberos *ngIf="seccion === 'barberos'"></app-barberos>
+      <app-servicios *ngIf="seccion === 'servicios'"></app-servicios>
+      <app-citas *ngIf="seccion === 'citas'"></app-citas>
+      <app-notificaciones *ngIf="seccion === 'notificaciones'"></app-notificaciones>
+    </div>
+  </section>
+</div>
