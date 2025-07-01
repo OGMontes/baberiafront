@@ -1,0 +1,99 @@
+<h2 class="seccion-titulo">Barberos</h2>
+
+<div class="acciones">
+  <button class="btn minimal" (click)="abrirModal()">＋ Agregar</button>
+  <button class="btn minimal" [disabled]="!barberoSeleccionado" (click)="editarBarbero()">✏️ Editar</button>
+  <button class="btn minimal danger" [disabled]="!barberoSeleccionado" (click)="abrirConfirmacionEliminar()">🗑️ Eliminar</button>
+</div>
+
+<div class="contenido-barberos">
+  <!-- 📋 Tabla -->
+  <table class="tabla-ios" *ngIf="barberos.length > 0">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Especialidades</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let b of barberos"
+        (click)="seleccionarBarbero(b)"
+        [class.seleccionado]="b === barberoSeleccionado"
+      >
+        <td>{{ b.Nombre }}</td>
+        <td>
+          <span *ngFor="let s of b.servicios || []; let i = index">
+            {{ s.Nombre }}<span *ngIf="i < (b.servicios?.length || 0) - 1">, </span>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- 🖼️ Panel de foto -->
+  <div class="panel-foto" *ngIf="barberoSeleccionado">
+    <img
+      [src]="fotoBaseUrl + (barberoSeleccionado.FotoUrl || 'default.jpg') + '?t=' + timestamp"
+      alt="Foto del barbero"
+      class="foto-barbero"
+    />
+
+    <div class="cambiar-foto-wrapper">
+      <button class="btn minimal danger cambiar-foto-btn" type="button" (click)="inputArchivo.click()">Cambiar foto</button>
+      <input type="file" #inputArchivo accept="image/*" (change)="subirFoto($event)" hidden />
+    </div>
+  </div>
+</div>
+
+<!-- 🧾 Modal Agregar/Editar -->
+<div class="modal-overlay" *ngIf="mostrarModal">
+  <div class="modal">
+    <button class="close-btn" (click)="cerrarModal()">×</button>
+    <h3>{{ modoEditar ? 'Editar Barbero' : 'Nuevo Barbero' }}</h3>
+
+    <form (ngSubmit)="guardarBarbero()" #form="ngForm">
+      <label>Nombre</label>
+      <input [(ngModel)]="nuevoBarbero.Nombre" name="nombre" required />
+
+      <label>Especialidades</label>
+      <div class="checkbox-group checkbox-grid">
+  <label *ngFor="let s of servicios" class="checkbox-chip">
+    <input
+      type="checkbox"
+      [value]="s.ServicioId"
+      [checked]="nuevoBarbero.serviciosIds.includes(s.ServicioId)"
+      (change)="toggleServicio(s.ServicioId, $event)"
+    />
+    {{ s.Nombre }}
+  </label>
+</div>
+
+
+      <label>Foto (URL)</label>
+      <input [(ngModel)]="nuevoBarbero.FotoUrl" name="foto" />
+
+      <div class="modal-actions">
+        <button class="btn minimal" type="submit">{{ modoEditar ? 'Actualizar' : 'Guardar' }}</button>
+        <button class="btn minimal danger" type="button" (click)="cerrarModal()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ❌ Modal Confirmar Eliminar -->
+<div class="modal-overlay" *ngIf="confirmarEliminar">
+  <div class="modal">
+    <h3>¿Eliminar barbero?</h3>
+    <p>¿Estás seguro que deseas eliminar <strong>{{ barberoSeleccionado?.Nombre }}</strong>?</p>
+    <div class="modal-actions">
+      <button class="btn minimal danger" (click)="confirmarEliminacion()">Sí, eliminar</button>
+      <button class="btn minimal" (click)="cancelarEliminacion()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- 🔔 Toast -->
+<div class="toast" *ngIf="mostrarToast">
+  {{ mensajeToast }}
+</div>

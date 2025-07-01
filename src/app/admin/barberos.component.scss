@@ -1,13 +1,14 @@
 .seccion-titulo {
-  font-size: 18px;
-  margin-bottom: 20px;
+  font-size: 22px;
   font-weight: 600;
-  letter-spacing: 0.5px;
+  color: white;
+  margin-bottom: 16px;
 }
 
 .acciones {
   display: flex;
-  gap: 16px;
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
 .btn.minimal {
@@ -15,15 +16,14 @@
   color: white;
   font-size: 14px;
   font-weight: 500;
-  padding: 8px 14px;
+  padding: 8px 16px;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  transition: all 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: 0.2s all ease;
   backdrop-filter: blur(4px);
-  letter-spacing: 0.3px;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.1);
     transform: translateY(-1px);
   }
 
@@ -32,7 +32,240 @@
     border-color: #ff3b30;
 
     &:hover {
-      background-color: rgba(255, 59, 48, 0.05);
+      background-color: rgba(255, 59, 48, 0.1);
     }
   }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+.tabla-ios {
+  flex: 1;
+  min-width: 0;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(8px);
+  border-radius: 16px;
+  overflow: hidden;
+  color: white;
+  font-size: 14px;
+
+  th, td {
+    padding: 14px 20px;
+    text-align: left;
+  }
+
+  thead {
+    background: rgba(255, 255, 255, 0.04);
+    th {
+      font-weight: 600;
+      color: #ff3b30;
+    }
+  }
+
+  tbody tr {
+    transition: background 0.2s ease;
+    cursor: pointer;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    &.seleccionado {
+      background: rgba(255, 59, 48, 0.12);
+      border-left: 4px solid #ff3b30;
+    }
+  }
+}
+
+.contenido-barberos {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: nowrap;
+}
+
+.panel-foto {
+  flex-shrink: 0;
+  margin-left: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+
+  .foto-barbero {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .cambiar-foto-btn {
+    color: #ff3b30;
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 10px;
+    border: 1px solid #ff3b30;
+    background: transparent;
+    cursor: pointer;
+    transition: 0.2s all ease;
+
+    &:hover {
+      background-color: rgba(255, 59, 48, 0.1);
+    }
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  padding: 40px 16px;
+}
+
+.modal {
+  background: rgba(28, 28, 30, 0.95);
+  padding: 28px 24px;
+  border-radius: 20px;
+  width: 400px;
+  color: white;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+  position: relative;
+
+  h3 {
+    font-size: 20px;
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+
+  label {
+    display: block;
+    margin: 12px 0 4px;
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  input, select {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    font-size: 14px;
+  }
+
+  .modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .close-btn {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+
+    &:hover {
+      color: #ff3b30;
+    }
+  }
+}
+
+// ✅ Chips iOS con checkbox mini
+.checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 13px;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  input[type="checkbox"] {
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1.2px solid rgba(255, 255, 255, 0.3);
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:checked {
+      background-color: #ff3b30;
+      border-color: #ff3b30;
+    }
+
+    &:checked::after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 4px;
+      width: 3px;
+      height: 6px;
+      border: solid white;
+      border-width: 0 1.5px 1.5px 0;
+      transform: rotate(45deg);
+    }
+  }
+}
+
+.toast {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  background: rgba(40, 40, 40, 0.9);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  font-size: 14px;
+  z-index: 1000;
+  animation: fade-in-out 3s ease-in-out forwards;
+}
+
+@keyframes fade-in-out {
+  0% { opacity: 0; transform: translateY(-10px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-10px); }
 }

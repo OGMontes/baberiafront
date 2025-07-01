@@ -1,18 +1,15 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-citas',
   standalone: true,
-  imports: [CommonModule],
-  template: `
-    <h2 class="seccion-titulo">Citas</h2>
-    <div class="acciones">
-      <button class="btn minimal">＋ Nueva</button>
-      <button class="btn minimal">✏️ Editar</button>
-      <button class="btn minimal danger">🗑️ Cancelar</button>
-    </div>
-  `,
+  imports: [CommonModule, FormsModule],
+  templateUrl: './citas.component.html',
   styleUrls: ['./citas.component.scss']
 })
-export class CitasComponent {}
+export class CitasComponent {
+  // Variables básicas
+  mensaje = 'Componente de Citas funcionando';
+}

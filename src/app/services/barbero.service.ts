@@ -15,13 +15,15 @@ export interface Barbero {
   Especialidad?: string;
   FotoUrl: string;
   servicios?: Servicio[];
+  Activo?: boolean;
+  FechaIngreso?: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class BarberoService {
-  private baseUrl = 'http://localhost:8000';
+  private baseUrl = 'http://localhost:8000'; // ✅ Cambia por environment.apiUrl si ya lo tienes
 
   constructor(private http: HttpClient) {}
 
@@ -31,5 +33,25 @@ export class BarberoService {
 
   obtenerBarberosPorServicio(servicioId: number): Observable<Barbero[]> {
     return this.http.get<Barbero[]>(`${this.baseUrl}/barberos/por-servicio/${servicioId}`);
+  }
+
+  crearBarbero(barbero: Partial<Barbero>): Observable<Barbero> {
+    return this.http.post<Barbero>(`${this.baseUrl}/barberos`, barbero);
+  }
+
+  actualizarBarbero(barberoId: number, barberoData: any): Observable<Barbero> {
+    return this.http.put<Barbero>(`${this.baseUrl}/barberos/${barberoId}`, barberoData);
+  }
+
+  eliminarBarbero(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/barberos/${id}`);
+  }
+
+  obtenerServicios(): Observable<Servicio[]> {
+    return this.http.get<Servicio[]>(`${this.baseUrl}/servicios`);
+  }
+
+  subirFoto(barberoId: number, formData: FormData): Observable<any> {
+    return this.http.post(`${this.baseUrl}/barberos/subir-foto/${barberoId}`, formData);
   }
 }

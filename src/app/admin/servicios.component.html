@@ -1,0 +1,74 @@
+<h2 class="seccion-titulo">Servicios</h2>
+
+<div class="acciones">
+  <button class="btn minimal" (click)="abrirModal()">＋ Agregar</button>
+  <button class="btn minimal" [disabled]="!servicioSeleccionado" (click)="editarServicio()">✏️ Editar</button>
+  <button class="btn minimal danger" [disabled]="!servicioSeleccionado" (click)="abrirConfirmacionEliminar()">🗑️ Eliminar</button>
+</div>
+
+<table class="tabla-ios" *ngIf="servicios.length > 0">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Duración</th>
+      <th>Precio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="let s of servicios"
+      (click)="seleccionarServicio(s)"
+      [class.seleccionado]="s === servicioSeleccionado"
+    >
+      <td>{{ s.Nombre }}</td>
+      <td>{{ s.duracion_minutos }} min</td>
+      <td>${{ s.Precio }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- MODAL: NUEVO O EDITAR SERVICIO -->
+<div class="modal-overlay" *ngIf="mostrarModal">
+  <div class="modal">
+    <button class="close-btn" (click)="cerrarModal()">×</button>
+
+    <h3>{{ modoEditar ? 'Editar Servicio' : 'Nuevo Servicio' }}</h3>
+
+    <form (ngSubmit)="guardarServicio()" #form="ngForm">
+      <label>Nombre</label>
+      <input [(ngModel)]="nuevoServicio.Nombre" name="nombre" required />
+
+      <label>Duración (min)</label>
+      <input type="number" [(ngModel)]="nuevoServicio.duracion_minutos" name="duracion" required min="1" />
+
+      <label>Precio ($)</label>
+      <input type="number" [(ngModel)]="nuevoServicio.Precio" name="precio" required min="1" />
+
+      <label>Descripción</label>
+      <textarea [(ngModel)]="nuevoServicio.Descripcion" name="descripcion"></textarea>
+
+      <div class="modal-actions">
+        <button class="btn minimal" type="submit">{{ modoEditar ? 'Actualizar' : 'Guardar' }}</button>
+        <button class="btn minimal danger" type="button" (click)="cerrarModal()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- MODAL: CONFIRMACIÓN ELIMINAR -->
+<div class="modal-overlay" *ngIf="confirmarEliminar">
+  <div class="modal">
+    <h3>¿Eliminar servicio?</h3>
+    <p>¿Estás seguro que deseas eliminar <strong>{{ servicioSeleccionado?.Nombre }}</strong>?</p>
+    <div class="modal-actions">
+      <button class="btn minimal danger" (click)="confirmarEliminacion()">Sí, eliminar</button>
+      <button class="btn minimal" (click)="cancelarEliminacion()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- TOAST de notificación -->
+<div class="toast" *ngIf="mostrarToast">
+  {{ mensajeToast }}
+</div>

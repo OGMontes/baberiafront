@@ -1,38 +1,10 @@
-.seccion-titulo {
-  font-size: 18px;
-  margin-bottom: 20px;
+h2 {
+  font-size: 20px;
   font-weight: 600;
-  letter-spacing: 0.5px;
-}
-
-.acciones {
-  display: flex;
-  gap: 16px;
-}
-
-.btn.minimal {
-  background: transparent;
   color: white;
-  font-size: 14px;
-  font-weight: 500;
-  padding: 8px 14px;
-  border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  transition: all 0.2s ease;
-  backdrop-filter: blur(4px);
-  letter-spacing: 0.3px;
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-    transform: translateY(-1px);
-  }
-
-  &.danger {
-    color: #ff3b30;
-    border-color: #ff3b30;
-
-    &:hover {
-      background-color: rgba(255, 59, 48, 0.05);
-    }
-  }
 }
+
+p {
+  color: #ccc;
+}
+

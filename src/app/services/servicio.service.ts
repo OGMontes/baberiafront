@@ -23,4 +23,16 @@ export class ServicioService {
   obtenerServicios(): Observable<Servicio[]> {
     return this.http.get<Servicio[]>(this.apiUrl);
   }
+
+  crearServicio(servicio: Partial<Servicio>) {
+  return this.http.post(this.apiUrl, servicio);
+}
+eliminarServicio(id: number) {
+  return this.http.delete(`${this.apiUrl}/${id}`);
+}
+actualizarServicio(id: number, servicio: Partial<Servicio>) {
+  return this.http.put(`${this.apiUrl}/${id}`, servicio);
+}
+
+
 }
