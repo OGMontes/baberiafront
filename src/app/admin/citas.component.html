@@ -1,3 +1,91 @@
-<h2>Citas</h2>
-<p>{{ mensaje }}</p>
+<div class="citas-container">
 
+  <!-- Encabezado con mes y navegación -->
+  <div class="calendario-header">
+    <button (click)="mesAnterior()">←</button>
+    <h2>{{ mesActual | date: 'MMMM yyyy' }}</h2>
+    <button (click)="mesSiguiente()">→</button>
+  </div>
+
+  <!-- Días de la semana -->
+  <div class="dias-semana">
+    <div *ngFor="let dia of diasSemana" class="dia-semana">
+      {{ dia }}
+    </div>
+  </div>
+
+  <!-- Matriz del calendario -->
+  <div class="calendario-grid">
+    <div *ngFor="let semana of semanas">
+      <div
+        *ngFor="let dia of semana"
+        class="dia-celda"
+        [ngClass]="{ 'hoy': esHoy(dia.fecha), 'fuera-mes': !dia.enMesActual }"
+        (click)="abrirDia(dia)">
+        
+        <div class="numero-dia">{{ dia.fecha.getDate() }}</div>
+
+        <!-- Citas del día -->
+        <div
+          *ngFor="let cita of dia.citas"
+          class="cita-resumen"
+          [ngClass]="cita.Estado?.toLowerCase()"
+          (click)="abrirModal(cita, $event)"
+          [title]="'Servicio: ' + getNombreServicio(cita.ServicioId) + ' - Barbero: ' + getNombreBarbero(cita.BarberoId)">
+          <span class="hora">{{ cita.FechaCita | date:'shortTime' }}</span>
+          <span class="cliente">{{ cita.NombreCliente }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de cita -->
+  <div class="modal-cita" *ngIf="citaSeleccionada">
+    <div class="modal-contenido">
+      <h3 *ngIf="citaSeleccionada.CitaId; else nuevaCita">
+        Editar cita
+      </h3>
+      <ng-template #nuevaCita>
+        <h3>Agendar nueva cita</h3>
+      </ng-template>
+
+      <form (ngSubmit)="guardarCita()" #formCita="ngForm">
+        <p><strong>Fecha:</strong> {{ citaSeleccionada.fecha | date:'fullDate' }}</p>
+
+        <label>Hora:</label>
+        <input type="time" [(ngModel)]="citaSeleccionada.hora" name="hora" required />
+
+        <label>Nombre:</label>
+        <input type="text" [(ngModel)]="citaSeleccionada.NombreCliente" name="NombreCliente" required />
+
+        <label>Servicio:</label>
+        <select [(ngModel)]="citaSeleccionada.ServicioId" name="ServicioId" required>
+          <option value="">Seleccionar</option>
+          <option *ngFor="let s of servicios" [value]="s.ServicioId">{{ s.Nombre }}</option>
+        </select>
+
+        <label>Barbero:</label>
+        <select [(ngModel)]="citaSeleccionada.BarberoId" name="BarberoId" required>
+          <option value="">Seleccionar</option>
+          <option *ngFor="let b of barberos" [value]="b.BarberoId">{{ b.Nombre }}</option>
+        </select>
+
+        <label>Comentarios:</label>
+        <textarea [(ngModel)]="citaSeleccionada.Comentarios" name="Comentarios" rows="2"></textarea>
+
+        <div class="acciones-modal">
+          <button type="submit">Guardar</button>
+          <button *ngIf="citaSeleccionada.CitaId" class="cancelar" (click)="cancelarCita()">Cancelar</button>
+          <button *ngIf="citaSeleccionada.Estado === 'Pendiente'" class="confirmar" (click)="confirmarCita()">Confirmar</button>
+          <button class="cerrar" type="button" (click)="cerrarModal()">Cerrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notificaciones -->
+  <div class="toast" *ngIf="mostrarToastActivo">
+    {{ toastMensaje }}
+  </div>
+
+</div>
