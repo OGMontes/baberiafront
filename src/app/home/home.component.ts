@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgIf, NgFor, NgStyle, CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-
+import { environment } from '../../environments/environment';
 import { BarberoService, Barbero } from '../services/barbero.service';
 
 interface Servicio {
@@ -57,9 +57,9 @@ cambiarFondoConFade() {
 
 
   cargarServicios() {
-    this.http.get<Servicio[]>('http://localhost:8000/servicios').subscribe(data => {
-      this.servicios = data;
-    });
+    this.http.get<Servicio[]>(`${environment.apiUrl}/servicios`).subscribe(data => {
+  this.servicios = data;
+});
   }
 
   toggleServicio(servicioId: number) {

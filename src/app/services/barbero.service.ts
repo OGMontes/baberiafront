@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 export interface Servicio {
   ServicioId: number;
@@ -23,7 +24,7 @@ export interface Barbero {
   providedIn: 'root'
 })
 export class BarberoService {
-  private baseUrl = 'http://localhost:8000'; // ✅ Cambia por environment.apiUrl si ya lo tienes
+  private baseUrl = `${environment.apiUrl}/barberos`;
 
   constructor(private http: HttpClient) {}
 
