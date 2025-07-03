@@ -29,30 +29,31 @@ export class BarberoService {
   constructor(private http: HttpClient) {}
 
   obtenerBarberos(): Observable<Barbero[]> {
-    return this.http.get<Barbero[]>(`${this.baseUrl}/barberos`);
+    return this.http.get<Barbero[]>(`${this.baseUrl}`);
   }
 
   obtenerBarberosPorServicio(servicioId: number): Observable<Barbero[]> {
-    return this.http.get<Barbero[]>(`${this.baseUrl}/barberos/por-servicio/${servicioId}`);
+    return this.http.get<Barbero[]>(`${this.baseUrl}/por-servicio/${servicioId}`);
   }
 
   crearBarbero(barbero: Partial<Barbero>): Observable<Barbero> {
-    return this.http.post<Barbero>(`${this.baseUrl}/barberos`, barbero);
+    return this.http.post<Barbero>(`${this.baseUrl}`, barbero);
   }
 
   actualizarBarbero(barberoId: number, barberoData: any): Observable<Barbero> {
-    return this.http.put<Barbero>(`${this.baseUrl}/barberos/${barberoId}`, barberoData);
+    return this.http.put<Barbero>(`${this.baseUrl}/${barberoId}`, barberoData);
   }
 
   eliminarBarbero(id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/barberos/${id}`);
+    return this.http.delete(`${this.baseUrl}/${id}`);
   }
 
   obtenerServicios(): Observable<Servicio[]> {
-    return this.http.get<Servicio[]>(`${this.baseUrl}/servicios`);
+    // Si quieres traer los servicios generales, probablemente esto debería estar en un ServicioService aparte.
+    return this.http.get<Servicio[]>(`${environment.apiUrl}/servicios`);
   }
 
   subirFoto(barberoId: number, formData: FormData): Observable<any> {
-    return this.http.post(`${this.baseUrl}/barberos/subir-foto/${barberoId}`, formData);
+    return this.http.post(`${this.baseUrl}/subir-foto/${barberoId}`, formData);
   }
 }
