@@ -1,7 +1,8 @@
 .citas-container {
-  padding: 2rem;
-  color: #f2f2f2;
-  font-family: 'Helvetica Neue', sans-serif;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
 
   .calendario-header {
     display: flex;
@@ -19,8 +20,8 @@
     button {
       background: rgba(255, 255, 255, 0.1);
       border: none;
-      border-radius: 6px; /* más redondeado */
-      padding: 0.4rem 1rem; /* menos padding para que sea más delgado */
+      border-radius: 6px;
+      padding: 0.4rem 1rem;
       color: white;
       cursor: pointer;
       font-weight: 500;
@@ -122,26 +123,45 @@
     }
   }
 
-  .modal-cita {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
+  .ver-mas {
+    color: #ff3b30;
+    font-size: 0.75rem;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 4px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .modal-cita,
+.modal-citas-dia {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  margin-top: 5vh; // o incluso 2vh si quieres más arriba
+  max-height: 80vh;
+  overflow-y: auto;
+  align-items: flex-start; // <-- cambia esto para alinear arriba
+  justify-content: center;
+  padding-top: 4vh; // <-- sube visualmente el modal
+  z-index: 999;
 
     .modal-contenido {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 16px;
+      background: rgba(28, 28, 30, 0.95);
+      backdrop-filter: blur(12px);
       padding: 2rem;
-      width: 90%;
-      max-width: 400px;
+      border-radius: 16px;
       color: white;
+      width: 90%;
+      max-width: 500px;
+      max-height: 85vh;
+      overflow-y: auto;
 
       h3 {
         margin-bottom: 1rem;
@@ -194,10 +214,10 @@
           }
 
           &.confirmar {
-            background-color: #28a745; /* Green */
+            background-color: #28a745;
             color: white;
-            font-size: 0.9rem; /* Delgadez */
-            padding: 0.35rem 0.8rem; /* Menos padding para más delgadez */
+            font-size: 0.9rem;
+            padding: 0.35rem 0.8rem;
           }
 
           &.cerrar {
@@ -210,8 +230,134 @@
           }
         }
       }
+
+      .cita-item.extendida {
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(8px);
+        padding: 1rem 1.2rem;
+        margin-bottom: 1rem;
+        border-radius: 16px;
+        font-size: 0.85rem;
+        color: white;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        line-height: 1.5;
+
+        strong {
+          font-size: 0.95rem;
+          color: #ff3b30;
+        }
+
+        span {
+          font-weight: 500;
+          font-size: 0.9rem;
+          display: inline-block;
+          margin-top: 0.2rem;
+        }
+
+        small {
+          display: block;
+          color: #ccc;
+          font-size: 0.75rem;
+          margin-top: 2px;
+        }
+
+        .acciones {
+          display: flex;
+          gap: 0.5rem;
+          margin-top: 0.7rem;
+          flex-wrap: wrap;
+          opacity: 0;
+          transition: 0.3s ease;
+
+          button {
+            flex: 1 1 auto;
+            font-size: 0.75rem;
+            padding: 0.35rem 0.6rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s ease;
+
+            &:nth-child(1) {
+              background: #007aff;
+              color: white;
+            }
+
+            &:nth-child(2) {
+              background: #28a745;
+              color: white;
+            }
+
+            &:nth-child(3) {
+              background: #ff3b30;
+              color: white;
+            }
+
+            &:hover {
+              opacity: 0.9;
+            }
+          }
+        }
+
+        &:hover .acciones {
+          opacity: 1;
+        }
+      }
+
+      button.cerrar {
+        display: block;
+        margin: 0 auto;
+        background: #ff3b30;
+        padding: 0.5rem 1.2rem;
+        border-radius: 8px;
+        margin-top: 1.5rem;
+        border: none;
+        color: white;
+        font-weight: 600;
+        cursor: pointer;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
     }
   }
+.cerrar-boton {
+  background: transparent;
+  color: #fff;
+  font-size: 1.2rem;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  transition: 0.3s ease;
+
+  &:hover {
+    color: #ff3b30;
+  }
+}
+
+.text-confirmada {
+  color: limegreen;
+}
+.text-pendiente {
+  color: #ffc107;
+}
+.text-cancelada {
+  color: #ff3b30;
+}
+
+.cerrar-boton {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+
+  &:hover {
+    color: #ff3b30;
+  }
+}
 
   @media (max-width: 768px) {
     .calendario-grid {

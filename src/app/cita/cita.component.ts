@@ -74,7 +74,7 @@ onServicioSeleccionado() {
       NombreCliente: this.cita.nombre_cliente,
       Correo: this.cita.correo,
       Telefono: this.cita.telefono,
-      FechaCita: this.cita.fecha_cita,
+      FechaCita: new Date(this.cita.fecha_cita).toISOString(),
       ServicioId: this.cita.servicio_id,
       BarberoId: this.cita.barbero_id,
       Comentarios: this.cita.comentarios

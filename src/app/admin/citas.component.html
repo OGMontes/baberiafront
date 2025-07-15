@@ -16,25 +16,28 @@
 
   <!-- Matriz del calendario -->
   <div class="calendario-grid">
-    <div *ngFor="let semana of semanas">
-      <div
-        *ngFor="let dia of semana"
-        class="dia-celda"
-        [ngClass]="{ 'hoy': esHoy(dia.fecha), 'fuera-mes': !dia.enMesActual }"
-        (click)="abrirDia(dia)">
-        
-        <div class="numero-dia">{{ dia.fecha.getDate() }}</div>
+    <div
+      *ngFor="let dia of semanas.flat()"
+      class="dia-celda"
+      [ngClass]="{ 'hoy': esHoy(dia.fecha), 'fuera-mes': !dia.enMesActual }"
+      (click)="abrirDia(dia)">
+      
+      <div class="numero-dia">{{ dia.fecha.getDate() }}</div>
 
-        <!-- Citas del día -->
-        <div
-          *ngFor="let cita of dia.citas"
-          class="cita-resumen"
-          [ngClass]="cita.Estado?.toLowerCase()"
-          (click)="abrirModal(cita, $event)"
-          [title]="'Servicio: ' + getNombreServicio(cita.ServicioId) + ' - Barbero: ' + getNombreBarbero(cita.BarberoId)">
-          <span class="hora">{{ cita.FechaCita | date:'shortTime' }}</span>
-          <span class="cliente">{{ cita.NombreCliente }}</span>
-        </div>
+      <!-- Primeras 5 citas -->
+      <div
+        *ngFor="let cita of dia.citas.slice(0, 5)"
+        class="cita-resumen"
+        [ngClass]="cita.Estado?.toLowerCase()"
+        (click)="abrirModal(cita, $event)"
+        [title]="'Servicio: ' + getNombreServicio(cita.ServicioId) + ' - Barbero: ' + getNombreBarbero(cita.BarberoId)">
+        <span class="hora">{{ cita.FechaCita | date:'shortTime' }}</span>
+        <span class="cliente">{{ cita.NombreCliente }}</span>
+      </div>
+
+      <!-- Botón "ver más" si hay más citas -->
+      <div *ngIf="dia.citas.length > 5" class="ver-mas" (click)="abrirModalCitasDia(dia)">
+        + ver más
       </div>
     </div>
   </div>
@@ -83,7 +86,66 @@
     </div>
   </div>
 
-  <!-- Toast Notificaciones -->
+<!-- Modal "ver más" funcional -->
+<div class="modal-citas-dia" *ngIf="diaSeleccionado">
+  <div class="modal-contenido extendida-scroll">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+<div style="display: flex; justify-content: space-between; align-items: center;">
+  <h3>Citas del {{ diaSeleccionado.fecha | date:'fullDate' }}</h3>
+  <button (click)="cerrarModalDia()" class="cerrar-boton">✖</button>
+</div>
+      <button (click)="cerrarModalDia()" class="cerrar-boton">✖</button>
+    </div>
+
+    <div *ngFor="let cita of diaSeleccionado.citas" class="cita-item extendida">
+      
+      <!-- Si está en modo edición -->
+      <ng-container *ngIf="cita.editando; else verCita">
+        <strong>{{ cita.FechaCita | date:'shortTime' }}</strong> – 
+        <input type="text" [(ngModel)]="cita.NombreCliente" placeholder="Cliente" />
+        <select [(ngModel)]="cita.ServicioId">
+          <option *ngFor="let s of servicios" [value]="s.ServicioId">{{ s.Nombre }}</option>
+        </select>
+        <select [(ngModel)]="cita.BarberoId">
+          <option *ngFor="let b of barberos" [value]="b.BarberoId">{{ b.Nombre }}</option>
+        </select>
+        <textarea [(ngModel)]="cita.Comentarios" placeholder="Comentarios" rows="2"></textarea>
+
+        <div class="acciones">
+          <button (click)="guardarCitaEditada(cita)">💾 Guardar</button>
+          <button (click)="cita.editando = false">❌ Cancelar</button>
+        </div>
+      </ng-container>
+
+      <!-- Vista normal -->
+      <ng-template #verCita>
+        <strong>{{ cita.FechaCita | date:'shortTime' }}</strong> – 
+        <span>{{ cita.NombreCliente }}</span><br>
+        <small>Servicio: {{ getNombreServicio(cita.ServicioId) }}</small><br>
+        <small>Barbero: {{ getNombreBarbero(cita.BarberoId) }}</small><br>
+        <small>Estado: 
+          <span [ngClass]="{
+            'text-confirmada': cita.Estado === 'Confirmada',
+            'text-pendiente': cita.Estado === 'Pendiente',
+            'text-cancelada': cita.Estado === 'Cancelada'
+          }">{{ cita.Estado }}</span>
+        </small><br>
+        <small *ngIf="cita.Comentarios">📝 {{ cita.Comentarios }}</small><br>
+
+        <div class="acciones">
+          <button (click)="cita.editando = true">✏️ Editar</button>
+          <button *ngIf="cita.Estado === 'Pendiente'" (click)="confirmarCitaDesdeLista(cita)">✅ Confirmar</button>
+          <button (click)="cancelarCitaDesdeLista(cita)">❌ Cancelar</button>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+
+
+
+  <!-- Toast -->
   <div class="toast" *ngIf="mostrarToastActivo">
     {{ toastMensaje }}
   </div>

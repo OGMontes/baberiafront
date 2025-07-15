@@ -17,6 +17,8 @@ export class CitasComponent implements OnInit {
   mesActual: Date = new Date();
   semanas: any[][] = [];
   citaSeleccionada: any = null;
+  diaSeleccionado: any = null;
+
 
   barberos: { BarberoId: number; Nombre: string }[] = [];
   servicios: { ServicioId: number; Nombre: string }[] = [];
@@ -92,6 +94,15 @@ export class CitasComponent implements OnInit {
 
     this.semanas = semanasTemp;
   }
+
+  abrirModalCitasDia(dia: any): void {
+  this.diaSeleccionado = dia;
+}
+
+cerrarModalDia(): void {
+  this.diaSeleccionado = null;
+}
+
 
   obtenerCitasDelDia(fecha: Date): CitaResponse[] {
     const clave = `${fecha.getFullYear()}-${String(fecha.getMonth() + 1).padStart(2, '0')}-${String(fecha.getDate()).padStart(2, '0')}`;
@@ -230,4 +241,28 @@ export class CitasComponent implements OnInit {
     this.mesActual = new Date(this.mesActual.getFullYear(), this.mesActual.getMonth() + 1, 1);
     this.generarCalendario();
   }
+  confirmarCitaDesdeLista(cita: CitaResponse): void {
+  this.citaService.actualizarCita(cita.CitaId, {
+    Estado: 'Confirmada'
+  }).subscribe(() => {
+    cita.Estado = 'Confirmada'; // ✅ Forzar actualización visual
+    this.mostrarToast('Cita confirmada correctamente');
+  });
+}
+guardarCitaEditada(cita: any) {
+  // Aquí puedes hacer la llamada a tu servicio si quieres actualizar en backend
+  // Por ahora simula:
+  console.log('Cita actualizada:', cita);
+  cita.editando = false;
+}
+
+cancelarCitaDesdeLista(cita: CitaResponse): void {
+  this.citaService.actualizarCita(cita.CitaId, {
+    Estado: 'Cancelada'
+  }).subscribe(() => {
+    cita.Estado = 'Cancelada'; // ✅ Forzar actualización visual
+    this.mostrarToast('Cita cancelada correctamente');
+  });
+}
+
 }

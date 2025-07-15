@@ -51,10 +51,16 @@
 .contenido {
   flex: 1;
   padding: 40px;
-  overflow-y: auto;
+  overflow-y: unset; // ❌ quita el scroll interno
+  height: auto; // 🔓 permite que crezca naturalmente
 }
 
+
 .card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20px;
