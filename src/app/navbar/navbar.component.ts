@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, NavigationEnd, RouterLink, RouterLinkActive } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -9,48 +9,42 @@ import { filter } from 'rxjs/operators';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
-  activeSection: string = '';
-  menuAbierto: boolean = false;
+export class NavbarComponent {
+  menuAbierto = false;
+  activeSection = '';
 
   constructor(private router: Router) {}
 
-  ngOnInit(): void {
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: NavigationEnd) => {
-      if (event.urlAfterRedirects !== '/') {
-        this.activeSection = '';
-      }
-      this.menuAbierto = false; // 🔒 Cierra menú tras navegación
-    });
-  }
-
-  toggleMenu() {
+  toggleMenu(): void {
     this.menuAbierto = !this.menuAbierto;
   }
 
-  navigateToHomeAndScroll(id?: string) {
-    this.activeSection = id || 'top';
-    this.menuAbierto = false;
+  navigateToHomeAndScroll(id?: string): void {
+  this.activeSection = id || 'top';
+  this.menuAbierto = false;
 
-    const scrollToElement = () => {
-      if (id) {
-        const el = document.getElementById(id);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    };
-
-    if (this.router.url !== '/') {
-      this.router.navigate(['/']).then(() => {
-        setTimeout(scrollToElement, 100);
-      });
+  const scrollToElement = () => {
+    if (id) {
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } else {
-      scrollToElement();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+  };
+
+  if (this.router.url !== '/') {
+    this.router.navigate(['/']).then(() => {
+      setTimeout(scrollToElement, 100);
+    });
+  } else {
+    scrollToElement();
   }
+}
+
+
+  isActive(section: string): boolean {
+  return this.router.url === '/' && this.activeSection === section;
+}
+
+
 }

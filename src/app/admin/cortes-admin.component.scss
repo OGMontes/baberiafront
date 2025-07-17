@@ -1,0 +1,53 @@
+.cortes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.card {
+  background-color: #222;
+  border-radius: 12px;
+  padding: 1rem;
+  color: white;
+  text-align: center;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+
+  h3 {
+    margin-bottom: 1rem;
+  }
+
+  .foto-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 1rem;
+
+    .foto-box {
+      position: relative;
+
+      img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 2px solid #555;
+      }
+
+      button {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background: red;
+        border: none;
+        border-radius: 50%;
+        color: white;
+        width: 24px;
+        height: 24px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+    }
+  }
+}

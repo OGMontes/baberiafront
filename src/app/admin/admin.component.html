@@ -5,6 +5,7 @@
     <ul class="menu">
       <li (click)="seccion = 'barberos'" [class.activo]="seccion === 'barberos'">💈 Barberos</li>
       <li (click)="seccion = 'servicios'" [class.activo]="seccion === 'servicios'">✂️ Servicios</li>
+      <li (click)="seccion = 'cortes'" [class.activo]="seccion === 'cortes'">🖼️ Cortes</li>
       <li (click)="seccion = 'citas'" [class.activo]="seccion === 'citas'">📅 Citas</li>
       <li (click)="seccion = 'notificaciones'" [class.activo]="seccion === 'notificaciones'">🔔 Notificaciones</li>
     </ul>
@@ -15,6 +16,7 @@
     <div class="card">
       <app-barberos *ngIf="seccion === 'barberos'"></app-barberos>
       <app-servicios *ngIf="seccion === 'servicios'"></app-servicios>
+      <app-cortes-admin *ngIf="seccion === 'cortes'"></app-cortes-admin>
       <app-citas *ngIf="seccion === 'citas'"></app-citas>
       <app-notificaciones *ngIf="seccion === 'notificaciones'"></app-notificaciones>
     </div>

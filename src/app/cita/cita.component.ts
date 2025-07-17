@@ -4,6 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { BarberoService, Barbero } from '../services/barbero.service';
 import { ServicioService, Servicio } from '../services/servicio.service';
 import { CitaService } from '../services/cita.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cita',
@@ -27,10 +28,12 @@ export class CitaComponent implements OnInit {
   };
 
   constructor(
-    private barberoService: BarberoService,
-    private servicioService: ServicioService,
-    private citaService: CitaService
-  ) {}
+  private barberoService: BarberoService,
+  private servicioService: ServicioService,
+  private citaService: CitaService,
+  private router: Router // 👈 aquí
+) {}
+
 
   ngOnInit(): void {
     this.servicioService.obtenerServicios().subscribe((data) => {
@@ -65,29 +68,33 @@ onServicioSeleccionado() {
   }
 
   validarYEnviar(form: NgForm) {
-    if (form.invalid) {
-      alert('❗ Por favor completa todos los campos correctamente antes de continuar.');
-      return;
-    }
-
-    const citaFormateada = {
-      NombreCliente: this.cita.nombre_cliente,
-      Correo: this.cita.correo,
-      Telefono: this.cita.telefono,
-      FechaCita: new Date(this.cita.fecha_cita).toISOString(),
-      ServicioId: this.cita.servicio_id,
-      BarberoId: this.cita.barbero_id,
-      Comentarios: this.cita.comentarios
-    };
-
-    console.log("📤 Enviando al backend:", citaFormateada);
-
-    this.citaService.crearCita(citaFormateada).subscribe({
-      next: () => alert('✅ Cita reservada correctamente 🎉'),
-      error: (err) => {
-        console.error('Error al crear cita:', err);
-        alert('❌ Ocurrió un error al reservar la cita.');
-      }
-    });
+  if (form.invalid) {
+    alert('❗ Por favor completa todos los campos correctamente antes de continuar.');
+    return;
   }
+
+  const citaFormateada = {
+    NombreCliente: this.cita.nombre_cliente,
+    Correo: this.cita.correo,
+    Telefono: this.cita.telefono,
+    FechaCita: new Date(this.cita.fecha_cita).toISOString(),
+    ServicioId: this.cita.servicio_id,
+    BarberoId: this.cita.barbero_id,
+    Comentarios: this.cita.comentarios
+  };
+
+  console.log("📤 Enviando al backend:", citaFormateada);
+
+  this.citaService.crearCita(citaFormateada).subscribe({
+    next: () => {
+      alert('✅ Cita reservada correctamente 🎉');
+      this.router.navigate(['/']); // ⬅️ Redirige al home después del alert
+    },
+    error: (err) => {
+      console.error('Error al crear cita:', err);
+      alert('❌ Ocurrió un error al reservar la cita.');
+    }
+  });
+}
+
 }

@@ -10,6 +10,7 @@ export interface Servicio {
   Precio: number;
   duracion_minutos: number;
   Activo: boolean;
+  FotoCorte?: string;
 }
 
 

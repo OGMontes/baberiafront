@@ -32,12 +32,13 @@
 
       <div class="barberos-grid">
         <div *ngFor="let barbero of barberosPorServicio[servicio.ServicioId]" class="barbero-card">
-<img [src]="'assets/barberos/' + ((barbero.FotoUrl && barbero.FotoUrl.trim()) || 'default.jpg')" />
-          <div>
-            <p class="nombre">{{ barbero.Nombre }}</p>
-            <p class="especialidad">{{ barbero.Especialidad }}</p>
-          </div>
-        </div>
+<img [src]="fotoBaseUrl + (barbero.FotoUrl.trim() || 'default.jpg')" />
+  <div>
+    <p class="nombre">{{ barbero.Nombre }}</p>
+    <p class="especialidad">{{ barbero.Especialidad }}</p>
+  </div>
+</div>
+
       </div>
     </div>
   </div>

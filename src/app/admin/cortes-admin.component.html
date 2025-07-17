@@ -1,0 +1,23 @@
+<h2>Fotos de cortes por servicio</h2>
+
+<div class="cortes-grid">
+  <div class="card" *ngFor="let s of servicios">
+    <h3>{{ s.Nombre }}</h3>
+
+    <div class="foto-list">
+      <div class="foto-box" *ngFor="let f of fotos[s.ServicioId] || []">
+        <img [src]="fotoBaseUrl + f.filename + '?t=' + timestamp" />
+        <button class="btn danger" (click)="eliminarFoto(f.id, s.ServicioId)">🗑️</button>
+      </div>
+    </div>
+
+    <button class="btn minimal" (click)="fileInputs[s.ServicioId].click()" [disabled]="(fotos[s.ServicioId] || []).length >= 4">
+      ＋ Agregar foto
+    </button>
+    <input type="file" accept="image/*" #fileInput (change)="subirFoto(s.ServicioId, $event)" hidden />
+    <ng-template #setRef>
+      <span #fiRef></span>
+    </ng-template>
+    <ng-container *ngIf="setInputRef(fileInput, s.ServicioId)"></ng-container>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<section class="galeria-cortes">
+  <h2>Estilos y Cortes Disponibles</h2>
+  <!-- src/app/cortes/cortes.component.html -->
+<div class="grid-cortes">
+  <div class="card-corte" *ngFor="let s of servicios">
+    <div class="image-wrapper">
+      <img
+        [src]="baseUrl + s.fotos[s.current]"
+        [alt]="s.nombre"
+        [class.hidden]="s.fading"
+        loading="lazy"
+      />
+    </div>
+    <h3>{{ s.nombre }}</h3>
+  </div>
+</div>

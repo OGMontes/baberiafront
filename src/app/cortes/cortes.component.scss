@@ -1,0 +1,82 @@
+// src/app/cortes/cortes.component.scss
+
+@import url('https://fonts.googleapis.com/css2?family=SF+Pro+Text:wght@400;600;700&display=swap');
+
+:host {
+  display: block;
+  background: #0d0d0d;
+  color: #fff;
+  font-family: 'SF Pro Text', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  padding: 3rem 1rem;
+}
+
+.galeria-cortes {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+
+  h2 {
+    font-size: 2.75rem; font-weight: 700;
+    position: relative; display: inline-block;
+    margin-bottom: 1rem; padding-bottom: 0.5rem;
+    &::after {
+      content: '';
+      position: absolute; left: 50%; bottom: 0;
+      transform: translateX(-50%);
+      width: 100px; height: 4px;
+      background: linear-gradient(90deg, #ff5edf, #04c8de);
+      border-radius: 2px;
+    }
+  }
+
+  .grid-cortes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+  }
+
+  .card-corte {
+    display: flex; flex-direction: column; align-items: center;
+
+    .image-wrapper {
+  width: 100%;
+  padding-top: 75%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.15);
+  backdrop-filter: blur(12px);
+  margin-bottom: 1rem;
+
+  img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    /* transición de opacidad */
+    transition: opacity 1s ease-in-out;
+    opacity: 1;
+
+    /* cuando tenga la clase hidden, será opaco (fade‑out) */
+    &.hidden {
+      opacity: 0;
+    }
+  }
+}
+
+    h3 {
+      font-size: 1.5rem; font-weight: 600; margin: 0;
+    }
+  }
+}
+
+@keyframes fade {
+  0%   { opacity: 0; }
+  10%  { opacity: 1; }  /* aparece en el primer 10% = 0.8 s */
+  70%  { opacity: 1; }  /* se queda visible hasta el 70% = 5.6 s */
+  90%  { opacity: 0; }  /* fundido final entre 5.6 s y 7.2 s */
+  100% { opacity: 0; }
+}

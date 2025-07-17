@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CitaService, CitaPayload, CitaResponse } from '../services/cita.service';
 import { BarberoService } from '../services/barbero.service';
 import { ServicioService } from '../services/servicio.service';
+import { CortesAdminComponent } from './cortes-admin.component';
 
 @Component({
   standalone: true,
@@ -18,6 +19,10 @@ export class CitasComponent implements OnInit {
   semanas: any[][] = [];
   citaSeleccionada: any = null;
   diaSeleccionado: any = null;
+  mostrarConfirmadas = true;
+mostrarPendientes = true;
+mostrarCanceladas = true;
+
 
 
   barberos: { BarberoId: number; Nombre: string }[] = [];
@@ -105,9 +110,16 @@ cerrarModalDia(): void {
 
 
   obtenerCitasDelDia(fecha: Date): CitaResponse[] {
-    const clave = `${fecha.getFullYear()}-${String(fecha.getMonth() + 1).padStart(2, '0')}-${String(fecha.getDate()).padStart(2, '0')}`;
-    return this.citasPorFecha[clave] || [];
-  }
+  const clave = `${fecha.getFullYear()}-${String(fecha.getMonth() + 1).padStart(2, '0')}-${String(fecha.getDate()).padStart(2, '0')}`;
+  const todas = this.citasPorFecha[clave] || [];
+
+  return todas.filter(cita =>
+    (this.mostrarConfirmadas && cita.Estado === 'Confirmada') ||
+    (this.mostrarPendientes && cita.Estado === 'Pendiente') ||
+    (this.mostrarCanceladas && cita.Estado === 'Cancelada')
+  );
+}
+
 
   esHoy(fecha: Date): boolean {
     const hoy = new Date();

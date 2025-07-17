@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit {
   servicios: Servicio[] = [];
   servicioActivo: number | null = null;
   barberosPorServicio: { [key: number]: Barbero[] } = {};
+fotoBaseUrl = environment.barberosImgBaseUrl;
 
   constructor(private barberoService: BarberoService, private http: HttpClient) {}
 
